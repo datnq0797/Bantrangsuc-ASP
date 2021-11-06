@@ -1,0 +1,151 @@
+﻿
+@using PagedList.Mvc;
+<div id="breadcrumbs">
+    <div class="container">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li>Product results</li>
+        </ul>
+    </div>
+    <!-- / container -->
+</div>
+<!-- / body -->
+<div id="body">
+    <div class="container">
+        <div class="pagination justify-content-end">
+
+            <ul class="justify-content-between">
+                <li><a href="#"><span class="ico-prev"></span></a></li>
+                <li><a href="#">1</a></li>
+                <li class="active"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#"><span class="ico-next"></span></a></li>
+            </ul>
+        </div>
+        <div class="products-wrap">
+            <aside id="sidebar">
+                <div class="widget">
+                    <h3>Products per page:</h3>
+                    <fieldset>
+                        <input checked type="checkbox">
+                        <label>8</label>
+                        <input type="checkbox">
+                        <label>16</label>
+                        <input type="checkbox">
+                        <label>32</label>
+                    </fieldset>
+                </div>
+                <div class="widget">
+                    <h3>Sort by:</h3>
+                    <fieldset>
+                        <input checked type="checkbox">
+                        <label>Popularity</label>
+                        <input type="checkbox">
+                        <label>Date</label>
+                        <input type="checkbox">
+                        <label>Price</label>
+                    </fieldset>
+                </div>
+                <div class="widget">
+                    <h3>Condition:</h3>
+                    <fieldset>
+                        <input checked type="checkbox">
+                        <label>New</label>
+                        <input type="checkbox">
+                        <label>Used</label>
+                    </fieldset>
+                </div>
+                <div class="widget">
+                    <h3>Price range:</h3>
+                    <fieldset>
+                        <div id="price-range"></div>
+                    </fieldset>
+                </div>
+            </aside>
+            <div id="content">
+                <section class="products pagenavPro">
+                    @{
+                        /**/
+
+                        foreach (var item in Model)
+                        {
+                            <article>
+                                @if (string.IsNullOrEmpty(item.PATH))
+                                {
+                                    <a href="#"><img src="~/images/default.png" alt="" height="200" width="200"></a>
+                                }
+                                else
+                                {
+                                    <a href="/Products/ProductDetails?idPro=@item.ID_PRO"><img src="@item.PATH" alt="" height="200" width="200"></a>
+                                }
+
+                                <h3><a href="/Products/ProductDetails?idPro=@item.ID_PRO">@item.NAME</a></h3>
+                                <h4><a href="/Products/ProductDetails?idPro=@item.ID_PRO">@string.Format("{0:n0}", @item.PRICE) VNĐ</a></h4>
+                                <a href="#" class="addcart btn-add" dataPro="@item.ID_PRO" dataNamePro="@item.NAME" dataPricePro="@item.PRICE" dataPath="@item.PATH" dataDetail="@item.TITLE">Add to cart</a>
+                            </article>
+                        }
+                    }
+                </section>
+            </div>
+
+        </div>
+        <div class="pagination justify-content-end">
+            <!-- Phân trang -->
+            @if (ViewBag.TotalPage >= 1)
+            {
+                int pageDisplay = (int)ViewBag.MaxPage;
+                int totalPage = (int)ViewBag.TotalPage;
+                int currentPage = ((int)ViewBag.Page);
+
+                //Create numeric links
+                var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+                var endPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+
+                var link = "/Products/Products?idCate=" + ViewBag.TheLoai;
+                <nav>
+                    <ul class="pagination">
+                        @if (ViewBag.Prev < 1)
+                        {
+                            <li><a href="@link&&pageIndex=1"><span class="ico-prev"></span></a></li>
+                        }
+                        else
+                        {
+                            <li><a href="@link&&pageIndex=@ViewBag.Prev"><span class="ico-prev"></span></a></li>
+                        }
+
+                        @for (int i = startPageIndex; i <= endPageIndex; i++)
+                        {
+                            if (currentPage == i)
+                            {
+
+                                <li> <a href=" @link&pageIndex=@i" class="active" title="Trang @i">@i</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="@link&pageIndex=@i" title="Trang @i" class="pos">@i</a></li>
+                            }
+                        }
+
+                        @if (ViewBag.Next > ViewBag.TotalPage)
+                        {
+                            <li><a href="@link&&pageIndex=@ViewBag.TotalPage"><span class="ico-next"></span></a></li>
+                        }
+                        else
+                        {
+                            <li><a href="@link&&pageIndex=@ViewBag.Next"><span class="ico-next"></span></a></li>
+                        }
+
+
+                    </ul>
+                </nav>
+            }
+            else
+            {
+                <span>không có bản ghi nào</span>
+            }
+        </div>
+        <!-- / container -->
+    </div>
+    <!-- / body -->

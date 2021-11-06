@@ -1,0 +1,62 @@
+﻿@model JwelryPro.Models.PRODUCT
+@{
+    ViewBag.Title = "ProductDetails";
+}
+
+<div id="breadcrumbs">
+    <div class="container">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li>Product page</li>
+        </ul>
+    </div>
+    <!-- / container -->
+</div>
+<!-- / body -->
+<div id="body">
+    <div class="container">
+        <div id="content" class="full">
+            <div class="product">
+                <div class="image">
+                    <img src="@ViewBag.Detail.PATH" alt="">
+                </div>
+                <div class="details">
+                    <h1>@ViewBag.Detail.NAME</h1>
+                    <h4>@string.Format("{0:n0}", ViewBag.Detail.PRICE) VNĐ</h4>
+                    <div class="entry">
+                        <p>@ViewBag.Detail.TITLE</p>
+
+                    </div>
+                    <a href="#" class="btn-grey addcart" dataPro="@ViewBag.Detail.ID_PRO" dataNamePro="@ViewBag.Detail.NAME" dataPricePro="@ViewBag.Detail.PRICE" dataPath="@ViewBag.Detail.PATH" dataDetail="@ViewBag.Detail.TITLE">Add to cart</a>
+                    @*<div class="actions">
+                        <label>Quantity:</label>
+                        <input type="number" style="width:100px;" value="1" />
+                        <a href="#" class="btn-grey ">LIKE</a>
+                    </div>*@
+
+
+                </div>
+            </div>
+        </div>
+        <!--product details-->
+        <div class="last-products">
+            <h2>Related products</h2>
+            <section class="products">
+                @{
+                    foreach (var item in ViewBag.Related)
+                    {
+                        <article>
+                            <img src="@item.PATH" alt="" class="card-img-top img" height="200" width="100">
+                            <h3>@item.NAME</h3>
+                            <h4>@string.Format("{0:n0}", @item.PRICE) VNĐ</h4>
+                            <a href="#" class="addcart btn-add" dataPro="@item.ID_PRO" dataNamePro="@item.NAME" dataPricePro="@item.PRICE" dataPath="@item.PATH" dataDetail="@item.TITLE">Add to cart</a>
+                        </article>
+                    }
+                }
+            </section>
+        </div>
+    </div>
+    <!-- / container -->
+</div>
+
+

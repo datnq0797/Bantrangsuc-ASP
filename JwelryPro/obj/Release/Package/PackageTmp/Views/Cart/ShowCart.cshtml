@@ -1,0 +1,77 @@
+﻿@model JwelryPro.ViewModel.CartViewModel
+
+<div id="breadcrumbs">
+    <div class="container">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li>Cart</li>
+        </ul>
+    </div>
+    <!-- / container -->
+</div>s<!-- / body -->
+<div id="body">
+    <div class="container">
+        @{
+
+            if (Model == null)
+            {
+                <div class="col-8">
+                    <h4>Giỏ hàng đang rỗng</h4>
+                    @Html.ActionLink("Tiếp tục mua hàng", "Index", "Home", null,new { @class = "btn btn-primary" })
+                    @*<a href="/Home/Index">Continue</a>*@
+                </div>
+            }
+            else
+            {
+                <div id="content" class="full">
+                    <div class="cart-table">
+                        <table>
+                            <tr>
+                                <th class="items">Items</th>
+                                <th class="price">Price</th>
+                                <th class="qnt">Quantity</th>
+                                <th class="total">Total</th>
+                                <th class="delete"></th>
+                            </tr>
+                            @{
+                                foreach (var item in Model.ListItem)
+                                {
+                                    <tr>
+                                        <td class="items">
+                                            <div class="image">
+                                                <img src="@item.Path" alt="" height="100" width="100">
+                                            </div>
+                                            <h3><a href="#">@item.NamePro</a></h3>
+                                            <p>@item.Detail</p>
+                                        </td>
+                                        <td class="price">@string.Format("{0:n0}", @item.Price)</td>
+                                        <td class="qnt"><input type="number" value="@item.Quantity" class="quantityPro" dataIdPro="@item.IdProduct" style="width:80px;" /></td>
+
+                                        <td class="total"><span id="totalSP_@item.IdProduct">@string.Format("{0:n0}", item.Quantity * item.Price)</span></td>
+
+                                        <td class="cart"><a href="#" class="ico-del DelCart" dataIdPro="@item.IdProduct"></a></td>
+                                    </tr>
+                                }
+
+                            }
+
+
+                        </table>
+                    </div>
+                    <div class="total-count">
+                        <h4>Subtotal: <span id="subTotal">@string.Format("{0:n0}", @Model.ListItem.Sum(x => x.Quantity * x.Price))</span></h4>
+                        <p>+shippment: Free</p>
+                        <h3>Total to pay: <strong><span id="subTotal2">@string.Format("{0:n0}", @Model.ListItem.Sum(x => x.Quantity * x.Price))</span></strong></h3>
+                        <a href="/Cart/MuaHang" class="btn-grey">Finalize and pay</a>
+                    </div>
+
+                </div>
+                <!-- / content -->
+            }
+        }
+
+    </div>
+    <!-- / container -->
+</div>
+<!-- / body -->
+@Scripts.Render("~/bundles/bootstrap")

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<JwelryPro.Areas.Admin.ViewModel.SanPhamVM>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<!-- DataTales  -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h3 class="m-0 font-weight-bold text-primary">Sản phẩm</h3>
+
+        <a href="/Admin/Categories/AddSanPham" class="btn btn-primary btn-icon-split" style="margin-top:10px;" id="btn_AddPro">
+            <span class="icon text-white-50">
+                <i class="fa fa-plus"></i>
+            </span>
+            <span class="text">Thêm sản phẩm</span>
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Hình ảnh</th>
+                        <th>ID_Product</th>
+                        <th>Thể loại</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Tiêu đề</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Hình ảnh</th>
+                        <th>ID_Product</th>
+                        <th>Thể loại</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Tiêu đề</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @{
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td><img src="@item.path" alt="" height="200" width="200"></td>
+                                <td>@item.id</td>
+                                <td>@item.cate</td>
+                                <td>@item.name</td>
+                                <td>@item.price</td>
+                                <td>@item.title</td>
+                                <td>
+                                    <a href="#" class="btn btn-danger btn-circle btn_XoaSP" dataID="@item.id" >
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                    <a href="/Admin/Categories/SuaSanPham?idpro=@item.id" class="btn btn-warning btn-circle btn_ViewDetail" style="margin-top:10px;" dataID="@item.id">
+                                        <i class="fa fa-eraser"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

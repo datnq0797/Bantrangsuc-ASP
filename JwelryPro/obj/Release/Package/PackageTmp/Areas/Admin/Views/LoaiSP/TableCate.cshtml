@@ -1,0 +1,35 @@
+﻿@model IEnumerable<JwelryPro.Models.CATEGORy>
+
+<p>
+    @Html.ActionLink("Create", "Create", "LoaiSP")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Tên thể loại")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr id="row_@item.ID_CATE">
+            <td>
+                @Html.DisplayFor(modelItem => item.NAME_CATE)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit",new { id=item.ID_CATE}) |
+                @Html.ActionLink("Delete", "Delete",new {id= item.ID_CATE},new AjaxOptions {
+               Confirm="Bạn có muốn xóa bản ghi này?",
+               OnComplete="$('#row_"+item.ID_CATE+"').remove()",
+               OnFailure="$('#message').text('Không xóa được')",
+               HttpMethod="Delete"
+           })
+            </td>
+
+        </tr>
+
+    }
+
+</table>
+<span id="message"></span>

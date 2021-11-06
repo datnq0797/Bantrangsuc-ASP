@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SHOP_JEWELRYModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CARDS">
+    <Key>
+      <PropertyRef Name="ID_CARDS" />
+    </Key>
+    <Property Name="ID_CARDS" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAMES_CUS" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="SDT" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="DIACHI" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="EMAIL" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="TOTAL" Type="real" Nullable="false" />
+    <Property Name="TRANGTHAI" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CATEGORIES">
+    <Key>
+      <PropertyRef Name="ID_CATE" />
+    </Key>
+    <Property Name="ID_CATE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAME_CATE" Type="nvarchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DETAIL_CARDS">
+    <Key>
+      <PropertyRef Name="ID_DETAIL_CARDS" />
+    </Key>
+    <Property Name="ID_DETAIL_CARDS" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_PRO" Type="int" Nullable="false" />
+    <Property Name="ID_CARDS" Type="int" Nullable="false" />
+    <Property Name="QUANTITY" Type="int" Nullable="false" />
+    <Property Name="TOTAL_PRICE" Type="real" />
+  </EntityType>
+  <EntityType Name="EMPLOYEES">
+    <Key>
+      <PropertyRef Name="ID_EMP" />
+    </Key>
+    <Property Name="ID_EMP" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAME_EMP" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="USERS" Type="varchar" MaxLength="100" />
+    <Property Name="PASS" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="PRODUCTS">
+    <Key>
+      <PropertyRef Name="ID_PRO" />
+    </Key>
+    <Property Name="ID_PRO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_CATE" Type="int" Nullable="false" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="PRICE" Type="real" Nullable="false" />
+    <Property Name="TITLE" Type="nvarchar" MaxLength="255" />
+    <Property Name="PATH" Type="nvarchar" MaxLength="255" />
+    <Property Name="SALES" Type="int" Nullable="false" />
+    <Property Name="FAVOR" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_ID_CARDS">
+    <End Role="CARDS" Type="Self.CARDS" Multiplicity="1" />
+    <End Role="DETAIL_CARDS" Type="Self.DETAIL_CARDS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CARDS">
+        <PropertyRef Name="ID_CARDS" />
+      </Principal>
+      <Dependent Role="DETAIL_CARDS">
+        <PropertyRef Name="ID_CARDS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ID_CATE">
+    <End Role="CATEGORIES" Type="Self.CATEGORIES" Multiplicity="1" />
+    <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CATEGORIES">
+        <PropertyRef Name="ID_CATE" />
+      </Principal>
+      <Dependent Role="PRODUCTS">
+        <PropertyRef Name="ID_CATE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ID_PRO">
+    <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="1" />
+    <End Role="DETAIL_CARDS" Type="Self.DETAIL_CARDS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PRODUCTS">
+        <PropertyRef Name="ID_PRO" />
+      </Principal>
+      <Dependent Role="DETAIL_CARDS">
+        <PropertyRef Name="ID_PRO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SHOP_JEWELRYModelStoreContainer">
+    <EntitySet Name="CARDS" EntityType="Self.CARDS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CATEGORIES" EntityType="Self.CATEGORIES" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DETAIL_CARDS" EntityType="Self.DETAIL_CARDS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EMPLOYEES" EntityType="Self.EMPLOYEES" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PRODUCTS" EntityType="Self.PRODUCTS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_ID_CARDS" Association="Self.FK_ID_CARDS">
+      <End Role="CARDS" EntitySet="CARDS" />
+      <End Role="DETAIL_CARDS" EntitySet="DETAIL_CARDS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ID_CATE" Association="Self.FK_ID_CATE">
+      <End Role="CATEGORIES" EntitySet="CATEGORIES" />
+      <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ID_PRO" Association="Self.FK_ID_PRO">
+      <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+      <End Role="DETAIL_CARDS" EntitySet="DETAIL_CARDS" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
